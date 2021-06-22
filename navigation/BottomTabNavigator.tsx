@@ -12,6 +12,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import HomeScreen from '../screens/HomeScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -22,19 +23,24 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+    >
       <BottomTab.Screen
         name="TabOne"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
+          ),
         }}
       />
     </BottomTab.Navigator>
@@ -43,7 +49,10 @@ export default function BottomTabNavigator() {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof Ionicons>['name'];
+  color: string;
+}) {
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
@@ -56,7 +65,7 @@ function TabOneNavigator() {
     <TabOneStack.Navigator>
       <TabOneStack.Screen
         name="TabOneScreen"
-        component={TabOneScreen}
+        component={HomeScreen}
         options={{ headerTitle: 'Tab One Title' }}
       />
     </TabOneStack.Navigator>
