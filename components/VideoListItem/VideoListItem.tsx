@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from './styles';
+
+import { useNavigation } from '@react-navigation/native';
 
 type VideoListItemProps = {
   video: {
@@ -23,18 +25,23 @@ type VideoListItemProps = {
 const VideoListItem = (props: VideoListItemProps) => {
   const { video } = props;
 
+  const navigation = useNavigation();
   const minutes = Math.floor(video.duration / 60);
   const seconds = video.duration % 60;
 
   let viewsString = video.views.toString();
   if (video.views > 1000000) {
-    viewsString = (video.views/1000000).toFixed(1) + 'm';
-  }else if (video.views >1000) {
-    viewsString = (video.views/1000).toFixed(1)+ 'k';
+    viewsString = (video.views / 1000000).toFixed(1) + 'm';
+  } else if (video.views > 1000) {
+    viewsString = (video.views / 1000).toFixed(1) + 'k';
   }
 
+  const openVideoPage = () => {
+    navigation.navigate('VideoScreen');
+  };
+
   return (
-    <View style={styles.videoCard}>
+    <Pressable onPress={openVideoPage} style={styles.videoCard}>
       <View>
         <Image
           style={styles.thumbnail}
@@ -43,7 +50,9 @@ const VideoListItem = (props: VideoListItemProps) => {
           }}
         />
         <View style={styles.timeContainer}>
-          <Text style={styles.time}>{minutes} :{seconds < 10 ? '0' : ''} {seconds}</Text>
+          <Text style={styles.time}>
+            {minutes} :{seconds < 10 ? '0' : ''} {seconds}
+          </Text>
         </View>
       </View>
       <View style={styles.titleRow}>
@@ -56,7 +65,7 @@ const VideoListItem = (props: VideoListItemProps) => {
         </View>
         <MaterialCommunityIcons name="dots-vertical" size={16} color="white" />
       </View>
-    </View>
+    </Pressable>
   );
 };
 
